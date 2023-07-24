@@ -1,7 +1,7 @@
-const sequalize = require('../db')
+const sequelize = require('../db')
 const {DataTypes} = require('sequelize')
 
-const User = sequalize.define('users', {
+const User = sequelize.define('users', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     email: {type: DataTypes.STRING, unique: true,},
     login: {type: DataTypes.STRING, unique: true,},
@@ -10,5 +10,5 @@ const User = sequalize.define('users', {
 })
 
 module.exports = {
-    User,
+    User
 }
