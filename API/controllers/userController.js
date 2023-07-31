@@ -12,16 +12,10 @@ const generateJWT = (id, email, login, role) => {
 
 class UserController{
     async registration(req, res, next){
-        let body = '';
-        await req.on('data', chunk => {
-            body += chunk.toString()
-
-        });
-        const js = JSON.parse(body)
-        const email = js.email
-        const password = js.password
-        const login = js.login
-        const role = js.role || "USER"
+        const email = req.body.email
+        const password = req.body.password
+        const login = req.body.login
+        const role = req.body.role || "USER"
         if (!email || !password || !login){
             return next(ApiError.badRequest('Ошибка корректности данных.'));
         }
@@ -40,14 +34,9 @@ class UserController{
     }
 
     async login(req, res, next){
-        let body = '';
-        await req.on('data', chunk => {
-            body += chunk.toString()
+        const email = req.body.email
+        const password = req.body.password
 
-        });
-        const js = JSON.parse(body)
-        const email = js.email
-        const password = js.password
         const user = await User.findOne({ where: { email: email } });
         if (!user){
             return next(ApiError.badRequest('Пользователь с таким email не найден.'));
@@ -56,13 +45,13 @@ class UserController{
         if (!comparePassword){
             return next(ApiError.badRequest(('Неверный пароль')))
         }
-
         const token = generateJWT(user.id, user.email, user.login, user.role)
         return res.json(token)
     }
 
     async check(req, res, next){
         const token = generateJWT(req.user.id, req.user.email, req.user.login, req.user.role)
+
         return res.json(token)
     }
 }
