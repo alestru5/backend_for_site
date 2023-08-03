@@ -8,7 +8,15 @@ const User = sequelize.define('users', {
     password: {type: DataTypes.STRING},
     role: {type: DataTypes.STRING, defaultValue: "USER"},
 })
+const Task = sequelize.define('tasks', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    title: {type: DataTypes.STRING, unique: true,},
+    body: {type: DataTypes.STRING,},
+    score: {type: DataTypes.INTEGER},
+    answer: {type: DataTypes.STRING},
+})
 
 module.exports = {
-    User
+    User,
+    Task
 }

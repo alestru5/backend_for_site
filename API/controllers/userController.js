@@ -12,10 +12,12 @@ const generateJWT = (id, email, login, role) => {
 
 class UserController{
     async registration(req, res, next){
+        console.log(req.body)
         const email = req.body.email
         const password = req.body.password
         const login = req.body.login
         const role = req.body.role || "USER"
+
         if (!email || !password || !login){
             return next(ApiError.badRequest('Ошибка корректности данных.'));
         }
@@ -36,7 +38,6 @@ class UserController{
     async login(req, res, next){
         const email = req.body.email
         const password = req.body.password
-
         const user = await User.findOne({ where: { email: email } });
         if (!user){
             return next(ApiError.badRequest('Пользователь с таким email не найден.'));
