@@ -6,6 +6,7 @@ const User = sequelize.define('users', {
     email: {type: DataTypes.STRING, unique: true,},
     login: {type: DataTypes.STRING, unique: true,},
     password: {type: DataTypes.STRING},
+    score: {type: DataTypes.INTEGER},
     role: {type: DataTypes.STRING, defaultValue: "USER"},
 })
 const Task = sequelize.define('tasks', {

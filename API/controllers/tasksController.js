@@ -11,9 +11,14 @@ class UserController{
     }
     async list(req, res, next){
         Task.findAll().then(tasks=>{
-            console.log(tasks)
             res.json(tasks);
         }).catch(err=>console.log(err));
+    }
+    async complete(req, res) {
+        const score = req.body.score
+        const tmp = await User.findOne({where: {id: req.body.id}})
+        await User.update({score: tmp.dataValues.score + score},{where: {id: req.body.id}})
+        console.log(tmp.dataValues.score, req.body.id)
     }
 }
 

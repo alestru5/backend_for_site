@@ -12,9 +12,9 @@ const generateJWT = (id, email, login, role) => {
 
 class UserController{
     async registration(req, res, next){
-        console.log(req.body)
         const email = req.body.email
         const password = req.body.password
+        const score = 0
         const login = req.body.login
         const role = req.body.role || "USER"
 
@@ -30,7 +30,7 @@ class UserController{
             return next(ApiError.badRequest("Пользователь с таким email уже создан."))
         }
         const hashPassword = await bcrypt.hash(password, 3);
-        const user = await User.create({email, login, password: hashPassword, role: role})
+        const user = await User.create({email, login, password: hashPassword, score, role: role})
         const token  = generateJWT(user.id, user.email, user.login, user.role);
         return res.json(token)
     }
