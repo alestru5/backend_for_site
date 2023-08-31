@@ -16,8 +16,18 @@ const Task = sequelize.define('tasks', {
     score: {type: DataTypes.INTEGER},
     answer: {type: DataTypes.STRING},
 })
+const Complete_Task = sequelize.define('complete_tasks', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    user_id: {type: DataTypes.INTEGER},
+    task_id: {type: DataTypes.INTEGER},
+})
+
+User.hasMany(Complete_Task)
+Complete_Task.belongsTo(User)
+
 
 module.exports = {
     User,
-    Task
+    Task,
+    Complete_Task
 }
